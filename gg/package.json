@@ -1,16 +1,11 @@
-{
-  "name": "lightning-jo-baccarat-vercel-auth",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel deploy --prod"
-  },
-  "dependencies": {
-    "@neondatabase/serverless": "latest"
-  },
-  "devDependencies": {
-    "vercel": "latest"
-  }
-}
+CREATE TABLE IF NOT EXISTS users (
+  id BIGSERIAL PRIMARY KEY,
+  username VARCHAR(32) UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  salt TEXT NOT NULL,
+  balance BIGINT NOT NULL DEFAULT 1000000000,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
