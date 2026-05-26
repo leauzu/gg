@@ -17,5 +17,9 @@ try {
     if ($e->getCode() === '23505') send_json(409, ['error' => 'Username already exists.']);
     send_json(500, ['error' => 'Register failed.']);
 } catch (Throwable $e) {
-    send_json(500, ['error' => $e->getMessage() ?: 'Register failed.']);
+    error_log('REGISTER ERROR: ' . $e->getMessage());
+    json_response([
+        'error' => 'Register failed.',
+        'detail' => $e->getMessage()
+    ], 500);
 }
